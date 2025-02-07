@@ -13,7 +13,7 @@ Here's a quick example:
 $yourModel
    ->addMedia($pathToFile)
    ->withManipulations([
-      'thumb' => ['orientation' => '90'],
+      'thumb' => ['orientation' => ['orientation' => ['orientation' => '90']]],
    ]);
 ```
 
@@ -24,7 +24,7 @@ You can also apply media specific manipulations to an existing `Media` instance.
 ```php
 $mediaItems = $yourModel->getMedia('images');
 $mediaItems[0]->manipulations = [
-   'thumb' => ['orientation' => '90'],
+   'thumb' => ['orientation' => ['orientation' => '90']],
 ];
 
 // This will cause the thumb conversions to be regenerated.
@@ -39,8 +39,8 @@ Of course you can also set media specific manipulations for multiple conversions
 $yourModel
    ->addMedia($pathToFile)
    ->withManipulations([
-      'thumb' => ['orientation' => '90'],
-      'otherConversion' => ['orientation' => '90'],
+      'thumb' => ['orientation' => ['orientation' => '90']],
+      'otherConversion' => ['orientation' => ['orientation' => '90']],
    ]);
 ```
 
@@ -55,7 +55,7 @@ Here's an example:
 $yourModel
    ->addMedia($pathToFile)
    ->withManipulations([
-      '*' => ['orientation' => '90'],
+      '*' => ['orientation' => ['orientation' => '90']],
    ]);
 ```
 
@@ -65,7 +65,7 @@ You can also combine wildcard manipulations with one for a specific collection. 
 $yourModel
    ->addMedia($pathToFile)
    ->withManipulations([
-      '*' => ['orientation' => '90'],
-      'thumb' => ['filter' => 'greyscale'],
+      '*' => ['orientation' => ['orientation' => '90']],
+      'thumb' => ['greyscale' => []],
    ]);
 ```
