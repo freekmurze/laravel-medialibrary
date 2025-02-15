@@ -32,10 +32,10 @@ beforeEach(function () {
     $this->avatarMedia = $avatarMedia->fresh();
 });
 
-it('will prepend the manipulation saved on the model and the wildmark manipulations', function () {
+it('will prepend the manipulation saved on the model with the wildmark manipulations which will take precedence', function () {
     $this->media->manipulations = [
-        '*' => ['brightness' => ['-80']],
         'thumb' => ['greyscale' => [], 'height' => [10]],
+        '*' => ['brightness' => ['-80']],
     ];
 
     $conversionCollection = ConversionCollection::createForMedia($this->media);
@@ -51,6 +51,14 @@ it('will prepend the manipulation saved on the model and the wildmark manipulati
     $this->assertArrayHasKey('optimize', $manipulations);
 
     unset($manipulations['optimize']);
+
+    $this->assertEquals([
+        'brightness',
+        'greyscale',
+        'height',
+        'format',
+        'width',
+    ], array_keys($manipulations));
 
     $this->assertEquals([
         'greyscale' => [],
@@ -75,6 +83,13 @@ it('will prepend the manipulation saved on the model', function () {
     $this->assertArrayHasKey('optimize', $manipulations);
 
     unset($manipulations['optimize']);
+
+    $this->assertEquals([
+        'greyscale',
+        'height',
+        'format',
+        'width',
+    ], array_keys($manipulations));
 
     $this->assertEquals([
         'greyscale' => [],

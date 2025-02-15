@@ -79,11 +79,17 @@ class ConversionCollection extends Collection
 
     protected function addManipulationsFromDb(Media $media): void
     {
-        collect($media->manipulations)->each(function ($manipulation, $conversionName) {
+        collect(Arr::except($media->manipulations, '*'))->each(function ($manipulation, $conversionName) {
             $manipulations = new Manipulations($manipulation);
 
             $this->addManipulationToConversion($manipulations, $conversionName);
         });
+
+        if (array_key_exists('*', $media->manipulations)) {
+            $globalManipulations = new Manipulations($media->manipulations['*']);
+
+            $this->addManipulationToConversion($globalManipulations, '*');
+        }
     }
 
     public function getConversions(string $collectionName = ''): self
